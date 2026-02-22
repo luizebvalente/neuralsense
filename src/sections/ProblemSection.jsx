@@ -1,24 +1,30 @@
 import { useLanguage } from '../hooks/useLanguage';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import SectionTitle from '../components/ui/SectionTitle';
+import FadeIn, { StaggerContainer, StaggerItem } from '../components/ui/FadeIn';
 
 export default function ProblemSection() {
   const { t } = useLanguage();
-  const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section className="section-spacing relative overflow-hidden">
-      <div className="container-wide">
-        <SectionTitle title={t.problem.title} subtitle={t.problem.text} />
+    <section className="section-pad relative overflow-hidden glow-top">
+      <div className="container-ns">
+        <SectionTitle
+          title={t.problem.title}
+          subtitle={t.problem.text}
+        />
 
-        <div ref={ref} className={`grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-4xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <StaggerContainer stagger={0.12} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-[1100px] mx-auto">
           {t.problem.stats.map((stat, i) => (
-            <div key={i} className="text-center py-10 px-6 rounded-2xl border border-ns-border bg-ns-panel/30">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ns-white mb-3">{stat.value}</p>
-              <p className="text-sm text-ns-muted leading-relaxed">{stat.label}</p>
-            </div>
+            <StaggerItem key={i}>
+              <div className="text-center py-12 sm:py-14 px-6 rounded-2xl border border-ns-border bg-ns-card/50 hover:border-ns-border-hover hover:bg-ns-card transition-all duration-400">
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ns-white mb-4 font-[JetBrains_Mono] tracking-tight">
+                  {stat.value}
+                </p>
+                <p className="text-sm text-ns-muted leading-relaxed px-2">{stat.label}</p>
+              </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

@@ -7,17 +7,13 @@ export function fireConfetti() {
     gravity: 0.8,
     decay: 0.94,
     startVelocity: 30,
-    colors: ['#2563eb', '#3b82f6', '#7c3aed', '#a78bfa', '#60a5fa'],
+    colors: ['#6366f1', '#818cf8', '#a78bfa', '#f59e0b', '#fbbf24'],
     shapes: ['square'],
     scalar: 0.8,
   };
 
   function fire(particleRatio, opts) {
-    confetti({
-      ...defaults,
-      ...opts,
-      particleCount: Math.floor(200 * particleRatio),
-    });
+    confetti({ ...defaults, ...opts, particleCount: Math.floor(200 * particleRatio) });
   }
 
   fire(0.25, { spread: 26, startVelocity: 55 });

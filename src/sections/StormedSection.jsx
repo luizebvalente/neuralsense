@@ -1,68 +1,71 @@
 import { useState } from 'react';
 import { Check, Zap, TrendingDown, BarChart3, ArrowRight, FileSearch, ShieldCheck, GitCompare, Upload, CheckCircle, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+import FadeIn, { StaggerContainer, StaggerItem } from '../components/ui/FadeIn';
 import Button from '../components/ui/Button';
 
 const moduleIcons = { FileSearch, TrendingDown, ShieldCheck, GitCompare };
 
 export default function StormedSection() {
   const { t } = useLanguage();
-  const { ref, isVisible } = useScrollReveal();
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = ['Dashboard', 'Blueprint AI', 'Cost Analysis'];
 
   return (
-    <section id="stormed" className="section-spacing relative overflow-hidden">
-      <div className="container-wide">
+    <section id="stormed" className="section-pad relative overflow-hidden glow-top">
+      <div className="container-ns">
         {/* Header */}
-        <div ref={ref} className={`text-center mb-16 sm:mb-20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-ns-border bg-ns-panel/50 mb-8">
-            <Zap className="w-3.5 h-3.5 text-ns-accent" />
-            <span className="text-xs font-medium text-ns-muted tracking-wider uppercase">Produto NeuralSense</span>
+        <FadeIn className="text-center mb-16 sm:mb-20 lg:mb-28">
+          <div className="mb-8">
+            <span className="badge-ns">
+              <Zap className="w-3.5 h-3.5 text-ns-warm" />
+              <span>Produto NeuralSense</span>
+            </span>
           </div>
-          <h2 className="text-[2rem] sm:text-[2.5rem] lg:text-[3.25rem] font-bold text-ns-white leading-[1.1] tracking-tight mb-5">
+          <h2 className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.75rem] lg:text-[3.5rem] font-bold text-ns-white leading-[1.08] tracking-tight mb-6">
             STORMED<span className="text-ns-accent">.AI</span>
           </h2>
-          <p className="text-lg text-ns-accent font-medium mb-4">{t.stormed.subtitle}</p>
-          <p className="text-base text-ns-gray leading-relaxed max-w-[600px] mx-auto">{t.stormed.text}</p>
-        </div>
+          <p className="text-lg text-ns-accent font-semibold mb-5">{t.stormed.subtitle}</p>
+          <p className="text-base text-ns-gray leading-[1.8] max-w-[640px] mx-auto">{t.stormed.text}</p>
+        </FadeIn>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-6 mb-16 max-w-md mx-auto">
+        <FadeIn delay={0.1} className="flex justify-center gap-12 sm:gap-16 lg:gap-20 mb-16 sm:mb-20 lg:mb-24">
           {t.stormed.stats.map((stat, i) => (
             <div key={i} className="text-center">
-              <p className="text-2xl sm:text-3xl font-bold text-ns-white">{stat.value}</p>
-              <p className="text-xs text-ns-muted mt-1">{stat.label}</p>
+              <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-ns-white font-[JetBrains_Mono]">{stat.value}</p>
+              <p className="text-xs sm:text-sm text-ns-muted mt-2">{stat.label}</p>
             </div>
           ))}
-        </div>
+        </FadeIn>
 
         {/* Modules */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 max-w-5xl mx-auto">
+        <StaggerContainer stagger={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 sm:mb-20 lg:mb-24 max-w-[1100px] mx-auto">
           {t.stormed.modules.map((mod, i) => {
             const Icon = moduleIcons[mod.icon] || FileSearch;
             return (
-              <div key={i} className="p-8 rounded-2xl border border-ns-border bg-ns-panel/30">
-                <div className="w-10 h-10 rounded-xl bg-ns-accent/10 flex items-center justify-center mb-5">
-                  <Icon className="w-5 h-5 text-ns-accent" />
+              <StaggerItem key={i}>
+                <div className="p-8 sm:p-10 rounded-2xl border border-ns-border bg-ns-card/40 hover:border-ns-border-hover transition-all duration-400">
+                  <div className="w-12 h-12 rounded-xl bg-ns-accent-muted flex items-center justify-center mb-6">
+                    <Icon className="w-5 h-5 text-ns-accent" />
+                  </div>
+                  <h4 className="text-sm font-bold text-ns-white mb-3 font-[Outfit]">{mod.title}</h4>
+                  <p className="text-xs text-ns-muted leading-[1.8]">{mod.desc}</p>
                 </div>
-                <h4 className="text-sm font-bold text-ns-white mb-2">{mod.title}</h4>
-                <p className="text-xs text-ns-muted leading-relaxed">{mod.desc}</p>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
 
         {/* Features + Dashboard */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 max-w-5xl mx-auto items-start">
+        <FadeIn className="grid lg:grid-cols-2 gap-12 lg:gap-16 max-w-[1100px] mx-auto items-start">
           {/* Features */}
           <div>
-            <h3 className="text-xl font-bold text-ns-white mb-8">Funcionalidades</h3>
-            <div className="space-y-3 mb-10">
+            <h3 className="text-xl font-bold text-ns-white mb-10 font-[Outfit]">Funcionalidades</h3>
+            <div className="space-y-3 mb-12">
               {t.stormed.features.map((feature, i) => (
-                <div key={i} className="flex items-center gap-3 py-3 px-4 rounded-xl border border-ns-border/50 bg-ns-panel/20">
+                <div key={i} className="flex items-center gap-4 py-3.5 px-5 rounded-xl border border-ns-border/40 bg-ns-card/30 hover:border-ns-border-hover transition-colors duration-300">
                   <Check className="w-4 h-4 text-ns-accent flex-shrink-0" />
                   <span className="text-sm text-ns-gray">{feature}</span>
                 </div>
@@ -72,13 +75,13 @@ export default function StormedSection() {
           </div>
 
           {/* Dashboard mockup */}
-          <div className="rounded-2xl border border-ns-border bg-ns-panel/40 overflow-hidden">
+          <div className="rounded-2xl border border-ns-border bg-ns-card/50 overflow-hidden">
             <div className="flex border-b border-ns-border">
               {tabs.map((tab, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveTab(i)}
-                  className={`flex-1 px-4 py-3.5 text-xs font-medium transition-all ${
+                  className={`flex-1 px-4 py-4 text-xs font-semibold transition-all duration-300 ${
                     activeTab === i
                       ? 'text-ns-accent border-b-2 border-ns-accent bg-ns-accent/5'
                       : 'text-ns-muted hover:text-ns-gray'
@@ -89,26 +92,25 @@ export default function StormedSection() {
               ))}
             </div>
 
-            <div className="p-6 space-y-4">
+            <div className="p-6 sm:p-8 space-y-5">
               {activeTab === 0 && (
                 <>
                   <div className="grid grid-cols-3 gap-3">
                     {[
-                      { label: 'Custo Reduzido', value: '-23%', icon: TrendingDown, color: 'text-green-400' },
-                      { label: 'Alertas Hoje', value: '7', icon: Zap, color: 'text-amber-400' },
+                      { label: 'Custo Reduzido', value: '-23%', icon: TrendingDown, color: 'text-emerald-400' },
+                      { label: 'Alertas Hoje', value: '7', icon: Zap, color: 'text-ns-warm' },
                       { label: 'ROI Mensal', value: '+R$45k', icon: BarChart3, color: 'text-ns-accent' },
                     ].map((kpi, i) => (
-                      <div key={i} className="bg-ns-black/40 rounded-xl p-4 border border-ns-border/50">
+                      <div key={i} className="bg-ns-black/50 rounded-xl p-4 border border-ns-border/30">
                         <kpi.icon className={`w-4 h-4 ${kpi.color} mb-2`} />
-                        <p className={`text-lg font-bold ${kpi.color}`}>{kpi.value}</p>
+                        <p className={`text-lg font-bold font-[JetBrains_Mono] ${kpi.color}`}>{kpi.value}</p>
                         <p className="text-[10px] text-ns-muted mt-1">{kpi.label}</p>
                       </div>
                     ))}
                   </div>
-
-                  <div className="bg-ns-black/40 rounded-xl p-5 border border-ns-border/50">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-medium text-ns-gray">Custo por Componente</span>
+                  <div className="bg-ns-black/50 rounded-xl p-6 border border-ns-border/30">
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="text-xs font-semibold text-ns-gray">Custo por Componente</span>
                       <span className="text-[10px] text-ns-muted">30 dias</span>
                     </div>
                     {[
@@ -116,13 +118,13 @@ export default function StormedSection() {
                       { name: 'Alumínio 6061', pct: 65, saving: '-8%' },
                       { name: 'Processo CNC', pct: 45, saving: '-18%' },
                     ].map((item, i) => (
-                      <div key={i} className="mb-3 last:mb-0">
-                        <div className="flex justify-between text-[11px] mb-1.5">
+                      <div key={i} className="mb-4 last:mb-0">
+                        <div className="flex justify-between text-[11px] mb-2">
                           <span className="text-ns-gray">{item.name}</span>
-                          <span className="text-green-400 font-medium">{item.saving}</span>
+                          <span className="text-emerald-400 font-semibold font-[JetBrains_Mono]">{item.saving}</span>
                         </div>
-                        <div className="h-1.5 bg-ns-black rounded-full">
-                          <div className="h-full rounded-full bg-ns-accent/60" style={{ width: `${item.pct}%` }} />
+                        <div className="h-1.5 bg-ns-black rounded-full overflow-hidden">
+                          <div className="h-full rounded-full bg-ns-accent/50" style={{ width: `${item.pct}%` }} />
                         </div>
                       </div>
                     ))}
@@ -132,17 +134,16 @@ export default function StormedSection() {
 
               {activeTab === 1 && (
                 <>
-                  <div className="border border-dashed border-ns-border rounded-xl p-8 text-center">
+                  <div className="border border-dashed border-ns-border rounded-xl p-10 text-center">
                     <Upload className="w-8 h-8 text-ns-muted mx-auto mb-3" />
-                    <p className="text-xs text-ns-muted">Upload CAD Blueprint</p>
-                    <p className="text-[10px] text-ns-muted/60 mt-1">.PDF, .DWG, .STEP</p>
+                    <p className="text-xs text-ns-muted font-medium">Upload CAD Blueprint</p>
+                    <p className="text-[10px] text-ns-subtle mt-1">.PDF, .DWG, .STEP</p>
                   </div>
-
-                  <div className="bg-ns-black/40 rounded-xl p-5 border border-ns-border/50">
-                    <div className="flex items-center gap-2 mb-4">
+                  <div className="bg-ns-black/50 rounded-xl p-6 border border-ns-border/30">
+                    <div className="flex items-center gap-2 mb-5">
                       <FileSearch className="w-4 h-4 text-ns-accent" />
                       <span className="text-xs font-bold text-ns-white">Análise</span>
-                      <span className="text-[10px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded-full ml-auto">OK</span>
+                      <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full ml-auto font-semibold">OK</span>
                     </div>
                     {[
                       { label: 'Componentes', value: '24 peças' },
@@ -150,16 +151,15 @@ export default function StormedSection() {
                       { label: 'Tolerância', value: '±0.005mm' },
                       { label: 'BOM', value: 'MBOM + BBOM' },
                     ].map((row, i) => (
-                      <div key={i} className="flex justify-between py-2 border-b border-ns-border/20 last:border-0">
+                      <div key={i} className="flex justify-between py-2.5 border-b border-ns-border/20 last:border-0">
                         <span className="text-[11px] text-ns-muted">{row.label}</span>
-                        <span className="text-[11px] text-ns-white font-medium">{row.value}</span>
+                        <span className="text-[11px] text-ns-white font-semibold font-[JetBrains_Mono]">{row.value}</span>
                       </div>
                     ))}
                   </div>
-
-                  <div className="bg-ns-black/40 rounded-xl p-5 border border-ns-border/50">
-                    <div className="flex items-center gap-2 mb-3">
-                      <ShieldCheck className="w-4 h-4 text-green-400" />
+                  <div className="bg-ns-black/50 rounded-xl p-6 border border-ns-border/30">
+                    <div className="flex items-center gap-2 mb-4">
+                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
                       <span className="text-xs font-bold text-ns-white">GD&T — ASME Y14.5</span>
                     </div>
                     {[
@@ -168,10 +168,12 @@ export default function StormedSection() {
                       { check: 'Surface finish', ok: true },
                       { check: 'Thread callouts', ok: false },
                     ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2 py-1">
-                        {item.ok ? <CheckCircle className="w-3.5 h-3.5 text-green-400" /> : <AlertTriangle className="w-3.5 h-3.5 text-yellow-400" />}
+                      <div key={i} className="flex items-center gap-2.5 py-1.5">
+                        {item.ok ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <AlertTriangle className="w-3.5 h-3.5 text-ns-warm" />}
                         <span className="text-[11px] text-ns-gray flex-1">{item.check}</span>
-                        <span className={`text-[10px] font-medium ${item.ok ? 'text-green-400' : 'text-yellow-400'}`}>{item.ok ? 'OK' : 'WARN'}</span>
+                        <span className={`text-[10px] font-semibold font-[JetBrains_Mono] ${item.ok ? 'text-emerald-400' : 'text-ns-warm'}`}>
+                          {item.ok ? 'OK' : 'WARN'}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -180,37 +182,36 @@ export default function StormedSection() {
 
               {activeTab === 2 && (
                 <>
-                  <div className="bg-ns-black/40 rounded-xl p-5 border border-ns-border/50">
+                  <div className="bg-ns-black/50 rounded-xl p-6 border border-ns-border/30">
                     <span className="text-xs font-bold text-ns-white">Fornecedores</span>
-                    <div className="space-y-3 mt-4">
+                    <div className="space-y-3 mt-5">
                       {[
                         { name: 'Fornecedor A (Atual)', price: 'R$142.50/kg', best: false },
                         { name: 'Fornecedor B', price: 'R$128.30/kg', best: false },
                         { name: 'Fornecedor C (IA)', price: 'R$118.90/kg', best: true },
                       ].map((s, i) => (
-                        <div key={i} className={`p-3 rounded-xl border ${s.best ? 'border-ns-accent/30 bg-ns-accent/5' : 'border-ns-border/30'}`}>
+                        <div key={i} className={`p-4 rounded-xl border ${s.best ? 'border-ns-accent/30 bg-ns-accent/5' : 'border-ns-border/20'}`}>
                           <div className="flex justify-between">
                             <span className="text-[11px] text-ns-gray">{s.name}</span>
-                            <span className={`text-[11px] font-bold ${s.best ? 'text-ns-accent' : 'text-ns-muted'}`}>{s.price}</span>
+                            <span className={`text-[11px] font-bold font-[JetBrains_Mono] ${s.best ? 'text-ns-accent' : 'text-ns-muted'}`}>{s.price}</span>
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
-
-                  <div className="bg-ns-black/40 rounded-xl p-5 border border-ns-border/50">
+                  <div className="bg-ns-black/50 rounded-xl p-6 border border-ns-border/30">
                     <span className="text-xs font-bold text-ns-white">Commodities</span>
-                    <div className="grid grid-cols-2 gap-3 mt-3">
+                    <div className="grid grid-cols-2 gap-3 mt-4">
                       {[
                         { name: 'Aço HRC', price: '$680/ton', change: '-2.3%', down: true },
                         { name: 'Alumínio', price: '$2,410/ton', change: '+1.1%', down: false },
                         { name: 'Cobre', price: '$8,950/ton', change: '-0.8%', down: true },
                         { name: 'Zinco', price: '$2,680/ton', change: '+0.5%', down: false },
                       ].map((c, i) => (
-                        <div key={i} className="p-3 rounded-xl border border-ns-border/20">
+                        <div key={i} className="p-4 rounded-xl border border-ns-border/20">
                           <p className="text-[10px] text-ns-muted">{c.name}</p>
-                          <p className="text-xs font-bold text-ns-white">{c.price}</p>
-                          <p className={`text-[10px] font-medium ${c.down ? 'text-green-400' : 'text-red-400'}`}>{c.change}</p>
+                          <p className="text-xs font-bold text-ns-white font-[JetBrains_Mono] mt-1">{c.price}</p>
+                          <p className={`text-[10px] font-semibold font-[JetBrains_Mono] mt-0.5 ${c.down ? 'text-emerald-400' : 'text-red-400'}`}>{c.change}</p>
                         </div>
                       ))}
                     </div>
@@ -219,7 +220,7 @@ export default function StormedSection() {
               )}
             </div>
           </div>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLanguage } from '../hooks/useLanguage';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import SectionTitle from '../components/ui/SectionTitle';
+import FadeIn from '../components/ui/FadeIn';
 
 const layerDetails = [
   ['AWS', 'Azure', 'GCP', 'Kubernetes', 'Docker'],
@@ -12,7 +12,6 @@ const layerDetails = [
 
 export default function SolutionSection() {
   const { t } = useLanguage();
-  const { ref, isVisible } = useScrollReveal();
   const [active, setActive] = useState(3);
 
   const layers = [
@@ -23,20 +22,24 @@ export default function SolutionSection() {
   ];
 
   return (
-    <section id="solution" className="section-spacing relative overflow-hidden">
-      <div className="container-wide">
-        <SectionTitle title={t.solution.title} subtitle={t.solution.subtitle} />
+    <section id="solution" className="section-pad relative overflow-hidden">
+      <div className="container-ns">
+        <SectionTitle
+          title={t.solution.title}
+          subtitle={t.solution.subtitle}
+        />
 
-        <div ref={ref} className={`max-w-3xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <FadeIn className="max-w-[800px] mx-auto">
+          {/* Tabs */}
+          <div className="flex flex-wrap justify-center gap-3 mb-14">
             {layers.map((layer, i) => (
               <button
                 key={i}
                 onClick={() => setActive(i)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-400 ${
                   active === i
-                    ? 'bg-ns-accent text-white'
-                    : 'text-ns-muted border border-ns-border hover:text-ns-white hover:border-ns-muted'
+                    ? 'bg-ns-accent text-white shadow-[0_0_20px_rgba(99,102,241,0.25)]'
+                    : 'text-ns-muted border border-ns-border hover:text-ns-white hover:border-ns-border-hover'
                 }`}
               >
                 {layer.tab}
@@ -44,18 +47,22 @@ export default function SolutionSection() {
             ))}
           </div>
 
-          <div className="rounded-2xl border border-ns-border bg-ns-panel/40 p-8 sm:p-10">
-            <h3 className="text-xl font-bold text-ns-white mb-6">{layers[active].label}</h3>
+          {/* Detail card */}
+          <div className="rounded-2xl border border-ns-border bg-ns-card/60 p-10 sm:p-12">
+            <h3 className="text-xl sm:text-2xl font-bold text-ns-white mb-8 font-[Outfit]">{layers[active].label}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {layerDetails[active].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 py-3 px-5 rounded-xl bg-ns-black/40 border border-ns-border/50">
+                <div
+                  key={i}
+                  className="flex items-center gap-4 py-4 px-6 rounded-xl bg-ns-black/50 border border-ns-border/40 hover:border-ns-border-hover transition-colors duration-300"
+                >
                   <div className="w-2 h-2 rounded-full bg-ns-accent flex-shrink-0" />
-                  <span className="text-sm text-ns-gray">{item}</span>
+                  <span className="text-sm text-ns-gray font-medium">{item}</span>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );

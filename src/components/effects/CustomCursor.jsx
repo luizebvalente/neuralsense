@@ -29,8 +29,8 @@ export default function CustomCursor() {
     document.addEventListener('mouseenter', onEnter);
 
     function animateTrail() {
-      trailRef.current.x += (pos.x - trailRef.current.x) * 0.15;
-      trailRef.current.y += (pos.y - trailRef.current.y) * 0.15;
+      trailRef.current.x += (pos.x - trailRef.current.x) * 0.12;
+      trailRef.current.y += (pos.y - trailRef.current.y) * 0.12;
       setTrailing({ ...trailRef.current });
       rafRef.current = requestAnimationFrame(animateTrail);
     }
@@ -59,8 +59,8 @@ export default function CustomCursor() {
           width: clicking ? 6 : 8,
           height: clicking ? 6 : 8,
           borderRadius: '50%',
-          background: '#3b82f6',
-          boxShadow: '0 0 10px rgba(37,99,235,0.8), 0 0 20px rgba(37,99,235,0.4)',
+          background: '#6366f1',
+          boxShadow: '0 0 12px rgba(99,102,241,0.8), 0 0 24px rgba(99,102,241,0.3)',
           opacity: visible ? 1 : 0,
           transform: clicking ? 'scale(0.8)' : 'scale(1)',
         }}
@@ -68,13 +68,13 @@ export default function CustomCursor() {
       <div
         className="fixed pointer-events-none z-[9998]"
         style={{
-          left: trailing.x - 16,
-          top: trailing.y - 16,
-          width: 32,
-          height: 32,
+          left: trailing.x - 18,
+          top: trailing.y - 18,
+          width: 36,
+          height: 36,
           borderRadius: '50%',
-          border: '1px solid rgba(37,99,235,0.3)',
-          opacity: visible ? 0.6 : 0,
+          border: '1px solid rgba(99,102,241,0.25)',
+          opacity: visible ? 0.5 : 0,
           transition: 'opacity 0.3s ease',
         }}
       />

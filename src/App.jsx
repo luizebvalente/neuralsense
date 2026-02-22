@@ -11,30 +11,31 @@ import ConsciousnessSection from './sections/ConsciousnessSection';
 import AboutSection from './sections/AboutSection';
 import ContactSection from './sections/ContactSection';
 
-function Divider() {
-  return <div className="section-divider" />;
+function SectionDivider() {
+  return <div className="section-line" />;
 }
 
 export default function App() {
   return (
     <LanguageProvider>
+      <div className="grain" />
       <CustomCursor />
       <Header />
       <main>
         <HeroSection />
-        <Divider />
+        <SectionDivider />
         <ProblemSection />
-        <Divider />
+        <SectionDivider />
         <SolutionSection />
-        <Divider />
+        <SectionDivider />
         <ServicesSection />
-        <Divider />
+        <SectionDivider />
         <StormedSection />
-        <Divider />
+        <SectionDivider />
         <ConsciousnessSection />
-        <Divider />
+        <SectionDivider />
         <AboutSection />
-        <Divider />
+        <SectionDivider />
         <ContactSection />
       </main>
       <Footer />

@@ -1,33 +1,38 @@
 import { Activity, Eye, TrendingUp, Zap, Bot, Layers } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import SectionTitle from '../components/ui/SectionTitle';
+import { StaggerContainer, StaggerItem } from '../components/ui/FadeIn';
 
 const iconMap = { Activity, Eye, TrendingUp, Zap, Bot, Layers };
 
 export default function ServicesSection() {
   const { t } = useLanguage();
-  const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="services" className="section-spacing relative overflow-hidden">
-      <div className="container-wide">
-        <SectionTitle title={t.services.title} subtitle={t.services.subtitle} />
+    <section id="services" className="section-pad relative overflow-hidden glow-top">
+      <div className="container-ns">
+        <SectionTitle
+          badge="Solutions"
+          title={t.services.title}
+          subtitle={t.services.subtitle}
+        />
 
-        <div ref={ref} className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <StaggerContainer stagger={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-[1100px] mx-auto">
           {t.services.cards.map((card, i) => {
             const Icon = iconMap[card.icon] || Activity;
             return (
-              <div key={i} className="group p-8 sm:p-10 rounded-2xl border border-ns-border bg-ns-panel/30 transition-all duration-300 hover:border-ns-accent/20 hover:bg-ns-panel/60">
-                <div className="w-12 h-12 rounded-xl bg-ns-accent/10 flex items-center justify-center mb-6 group-hover:bg-ns-accent/15 transition-colors">
-                  <Icon className="w-5 h-5 text-ns-accent" />
+              <StaggerItem key={i}>
+                <div className="group p-10 sm:p-12 rounded-2xl border border-ns-border bg-ns-card/40 transition-all duration-400 hover:border-ns-border-hover hover:bg-ns-card/70 hover:shadow-[0_24px_64px_rgba(0,0,0,0.3)]">
+                  <div className="w-14 h-14 rounded-2xl bg-ns-accent-muted flex items-center justify-center mb-8 group-hover:bg-ns-accent/15 transition-colors duration-400">
+                    <Icon className="w-6 h-6 text-ns-accent" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-ns-white mb-4 font-[Outfit]">{card.title}</h3>
+                  <p className="text-sm text-ns-muted leading-[1.8]">{card.desc}</p>
                 </div>
-                <h3 className="text-lg font-bold text-ns-white mb-3">{card.title}</h3>
-                <p className="text-sm text-ns-muted leading-relaxed">{card.desc}</p>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
