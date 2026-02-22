@@ -3,14 +3,13 @@ import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../hooks/useLanguage';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
-import Button from '../components/ui/Button';
 
 const NeuralSphere = lazy(() => import('../components/effects/NeuralSphere'));
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 60 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 1, delay, ease: [0.16, 1, 0.3, 1] },
+  transition: { duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] },
 });
 
 export default function HeroSection() {
@@ -21,7 +20,7 @@ export default function HeroSection() {
   const parts = t.hero.title.split(highlightWord);
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#000]">
       {/* 3D Background */}
       <Suspense fallback={null}>
         <div className="absolute inset-0">
@@ -29,31 +28,34 @@ export default function HeroSection() {
         </div>
       </Suspense>
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-ns-black/60 via-ns-black/30 to-ns-black" />
-      <div className="absolute inset-0 bg-gradient-to-r from-ns-black/20 via-transparent to-ns-black/20" />
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
 
       {/* Content */}
-      <div className="relative z-10 container-ns text-center">
-        <div className="max-w-[1000px] mx-auto">
-          {/* Badge */}
-          <motion.div {...fadeUp(0.3)} className="mb-12 sm:mb-14 md:mb-16">
-            <span className="badge-ns">
-              <span className="w-1.5 h-1.5 rounded-full bg-ns-accent animate-glow-pulse" />
-              AI-Powered Industrial Consulting
-            </span>
-          </motion.div>
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16 text-center">
+        <div className="max-w-[900px] mx-auto">
+          {/* Label */}
+          <motion.p
+            {...fadeUp(0.2)}
+            className="text-xs tracking-widest text-[#666] uppercase mb-8"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            AI-Powered Industrial Consulting
+          </motion.p>
 
-          {/* Headline — MASSIVE */}
+          {/* Headline */}
           <motion.h1
-            {...fadeUp(0.5)}
-            className="text-[2.5rem] sm:text-[3.25rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-extrabold text-ns-white leading-[1.02] tracking-[-0.04em] mb-10 sm:mb-12 md:mb-14"
-            style={{ fontFamily: "'Outfit', system-ui, sans-serif" }}
+            {...fadeUp(0.4)}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-8"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             {parts.length > 1 ? (
               <>
                 {parts[0]}
-                <span className="text-gradient">{highlightWord}</span>
+                <span className="bg-gradient-to-r from-[#6366f1] to-[#818cf8] bg-clip-text text-transparent">
+                  {highlightWord}
+                </span>
                 {parts[1]}
               </>
             ) : (
@@ -63,43 +65,59 @@ export default function HeroSection() {
 
           {/* Subtitle */}
           <motion.p
-            {...fadeUp(0.7)}
-            className="text-lg sm:text-xl md:text-[1.375rem] text-ns-gray max-w-[580px] mx-auto leading-[1.8] mb-14 sm:mb-16 md:mb-20"
+            {...fadeUp(0.6)}
+            className="text-lg text-[#999] max-w-lg mx-auto leading-relaxed mb-12"
+            style={{ fontFamily: "'Inter', sans-serif" }}
           >
             {t.hero.subtitle}
           </motion.p>
 
           {/* CTAs */}
           <motion.div
-            {...fadeUp(0.9)}
-            className="flex flex-col sm:flex-row gap-5 justify-center mb-28 sm:mb-32 md:mb-40"
+            {...fadeUp(0.8)}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-24 md:mb-32"
           >
-            <Button size="lg" icon={ArrowRight} onClick={() => scrollTo('services')}>
+            <button
+              onClick={() => scrollTo('services')}
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#6366f1] hover:bg-[#5558e6] text-white text-sm font-medium rounded-full transition-colors duration-200"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
               {t.hero.cta1}
-            </Button>
-            <Button size="lg" variant="secondary" icon={MessageCircle} iconPosition="left" onClick={() => scrollTo('contact')}>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => scrollTo('contact')}
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-white/[0.12] hover:border-white/[0.24] text-white text-sm font-medium rounded-full transition-colors duration-200"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              <MessageCircle className="w-4 h-4" />
               {t.hero.cta2}
-            </Button>
+            </button>
           </motion.div>
 
-          {/* Stats — with plenty of space between */}
+          {/* Stats */}
           <motion.div
-            {...fadeUp(1.1)}
-            className="flex justify-center gap-16 sm:gap-20 md:gap-28 lg:gap-36"
+            {...fadeUp(1.0)}
+            className="flex justify-center gap-12 md:gap-20"
           >
             {[
-              { value: '50+', label: 'Projetos' },
+              { value: '50+', label: lang === 'pt' ? 'Projetos' : 'Projects' },
               { value: '99.2%', label: 'Uptime' },
-              { value: '10x', label: 'ROI Médio' },
+              { value: '10x', label: lang === 'pt' ? 'ROI Médio' : 'Avg ROI' },
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <p
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-ns-white tracking-tight"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  className="text-3xl md:text-4xl font-bold text-white tracking-tight"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   {stat.value}
                 </p>
-                <p className="text-sm sm:text-base text-ns-muted mt-3 tracking-wide">{stat.label}</p>
+                <p
+                  className="text-sm text-[#666] mt-2"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {stat.label}
+                </p>
               </div>
             ))}
           </motion.div>
@@ -110,12 +128,12 @@ export default function HeroSection() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 1 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
+        transition={{ delay: 1.6, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
       >
-        <div className="w-6 h-10 rounded-full border border-ns-border/60 flex items-start justify-center p-2">
+        <div className="w-6 h-10 rounded-full border border-white/[0.12] flex items-start justify-center p-2">
           <motion.div
-            className="w-1 h-2 rounded-full bg-ns-accent"
+            className="w-1 h-2 rounded-full bg-[#6366f1]"
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
           />

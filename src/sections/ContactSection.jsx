@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Send, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
 import { fireConfetti } from '../components/effects/ConfettiEffect';
-import FadeIn from '../components/ui/FadeIn';
-import Button from '../components/ui/Button';
-import Input from '../components/ui/Input';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 export default function ContactSection() {
   const { t } = useLanguage();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [form, setForm] = useState({ name: '', email: '', company: '', phone: '', message: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -23,47 +24,159 @@ export default function ContactSection() {
     setForm({ name: '', email: '', company: '', phone: '', message: '' });
   }
 
+  const inputClasses =
+    'w-full bg-[#0a0a0a] border border-white/[0.06] rounded-xl px-4 py-3 text-white placeholder-[#444] text-sm focus:border-[#6366f1]/40 focus:outline-none transition-colors';
+
   return (
-    <section id="contact" className="section-pad relative overflow-hidden">
-      <div className="container-ns">
-        <FadeIn className="max-w-[620px] mx-auto">
-          {/* Title */}
-          <div className="text-center mb-16 sm:mb-20">
+    <section id="contact" className="py-24 md:py-32 relative overflow-hidden">
+      <div ref={ref} className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="max-w-xl mx-auto"
+        >
+          {/* Header */}
+          <div className="text-center mb-12">
             <h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.25rem] font-bold text-ns-white tracking-tight leading-[1.05] mb-8 sm:mb-10"
-              style={{ fontFamily: "'Outfit', system-ui, sans-serif" }}
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] mb-5"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             >
               {t.contact.title}
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-ns-gray leading-[1.8]">{t.contact.subtitle}</p>
+            <p
+              className="text-base md:text-lg text-[#999] leading-relaxed"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              {t.contact.subtitle}
+            </p>
           </div>
 
-          {/* Success */}
+          {/* Success Alert */}
           {success && (
-            <div className="mb-12 p-6 rounded-2xl bg-emerald-500/8 border border-emerald-500/25 flex items-center gap-4">
-              <CheckCircle className="w-6 h-6 text-emerald-400 flex-shrink-0" />
-              <p className="text-base text-emerald-400">{t.contact.form.success}</p>
+            <div className="mb-8 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+              <p
+                className="text-sm text-emerald-400"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                {t.contact.form.success}
+              </p>
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-7">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
-              <Input label={t.contact.form.name} placeholder="João Silva" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required />
-              <Input label={t.contact.form.email} type="email" placeholder="joao@empresa.com" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required />
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Name + Email */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label
+                  className="block text-sm font-medium text-[#999] mb-1.5"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {t.contact.form.name}
+                </label>
+                <input
+                  type="text"
+                  placeholder="João Silva"
+                  value={form.name}
+                  onChange={e => setForm({ ...form, name: e.target.value })}
+                  required
+                  className={inputClasses}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-sm font-medium text-[#999] mb-1.5"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {t.contact.form.email}
+                </label>
+                <input
+                  type="email"
+                  placeholder="joao@empresa.com"
+                  value={form.email}
+                  onChange={e => setForm({ ...form, email: e.target.value })}
+                  required
+                  className={inputClasses}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                />
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
-              <Input label={t.contact.form.company} placeholder="Empresa S/A" value={form.company} onChange={e => setForm({...form, company: e.target.value})} />
-              <Input label={t.contact.form.phone} type="tel" placeholder="+55 (11) 99999-0000" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
+
+            {/* Company + Phone */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label
+                  className="block text-sm font-medium text-[#999] mb-1.5"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {t.contact.form.company}
+                </label>
+                <input
+                  type="text"
+                  placeholder="Empresa S/A"
+                  value={form.company}
+                  onChange={e => setForm({ ...form, company: e.target.value })}
+                  className={inputClasses}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-sm font-medium text-[#999] mb-1.5"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {t.contact.form.phone}
+                </label>
+                <input
+                  type="tel"
+                  placeholder="+55 (11) 99999-0000"
+                  value={form.phone}
+                  onChange={e => setForm({ ...form, phone: e.target.value })}
+                  className={inputClasses}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                />
+              </div>
             </div>
-            <Input label={t.contact.form.message} textarea placeholder="Como podemos ajudar?" value={form.message} onChange={e => setForm({...form, message: e.target.value})} required />
-            <div className="pt-4">
-              <Button type="submit" loading={loading} className="w-full" size="lg" icon={Send}>
-                {t.contact.form.submit}
-              </Button>
+
+            {/* Message */}
+            <div>
+              <label
+                className="block text-sm font-medium text-[#999] mb-1.5"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                {t.contact.form.message}
+              </label>
+              <textarea
+                placeholder="Como podemos ajudar?"
+                value={form.message}
+                onChange={e => setForm({ ...form, message: e.target.value })}
+                required
+                className={`${inputClasses} min-h-[120px] resize-none`}
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              />
             </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-[#6366f1] hover:bg-[#818cf8] text-white py-3.5 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-60"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              {loading ? (
+                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  {t.contact.form.submit}
+                </>
+              )}
+            </button>
           </form>
-        </FadeIn>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLanguage } from '../hooks/useLanguage';
-import SectionTitle from '../components/ui/SectionTitle';
-import FadeIn from '../components/ui/FadeIn';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 const layerDetails = [
   ['AWS', 'Azure', 'GCP', 'Kubernetes', 'Docker'],
@@ -13,6 +13,8 @@ const layerDetails = [
 export default function SolutionSection() {
   const { t } = useLanguage();
   const [active, setActive] = useState(3);
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   const layers = [
     { label: t.solution.layers.iaas, tab: t.solution.tabs[3] },
@@ -22,21 +24,40 @@ export default function SolutionSection() {
   ];
 
   return (
-    <section id="solution" className="section-pad relative overflow-hidden">
-      <div className="container-ns">
-        <SectionTitle title={t.solution.title} subtitle={t.solution.subtitle} />
+    <section id="solution" className="py-24 md:py-32 bg-[#000]" ref={sectionRef}>
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16 md:mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
+            {t.solution.title}
+          </h2>
+          <p className="text-base text-[#999] max-w-2xl mx-auto">
+            {t.solution.subtitle}
+          </p>
+        </motion.div>
 
-        <FadeIn className="max-w-[860px] mx-auto">
-          {/* Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16 md:mb-20">
+        {/* Tabs + Card */}
+        <motion.div
+          className="max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+        >
+          {/* Tab buttons */}
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
             {layers.map((layer, i) => (
               <button
                 key={i}
                 onClick={() => setActive(i)}
-                className={`px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-400 ${
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                   active === i
-                    ? 'bg-ns-accent text-white shadow-[0_0_24px_rgba(99,102,241,0.3)]'
-                    : 'text-ns-muted border border-ns-border hover:text-ns-white hover:border-ns-border-hover'
+                    ? 'bg-[#6366f1] text-white'
+                    : 'text-[#999] border border-white/[0.06] hover:text-white'
                 }`}
               >
                 {layer.tab}
@@ -45,26 +66,26 @@ export default function SolutionSection() {
           </div>
 
           {/* Detail card */}
-          <div className="rounded-3xl border border-ns-border bg-ns-card/50 p-10 sm:p-14 md:p-16">
-            <h3
-              className="text-2xl sm:text-3xl font-bold text-ns-white mb-10 md:mb-12"
-              style={{ fontFamily: "'Outfit', system-ui, sans-serif" }}
-            >
+          <motion.div
+            key={active}
+            className="border border-white/[0.06] bg-[#0a0a0a] rounded-2xl p-8 md:p-10"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+          >
+            <h3 className="text-lg font-semibold text-white mb-6">
               {layers[active].label}
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {layerDetails[active].map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-5 py-5 px-7 rounded-2xl bg-ns-black/60 border border-ns-border/40 hover:border-ns-border-hover transition-all duration-300"
-                >
-                  <div className="w-2.5 h-2.5 rounded-full bg-ns-accent flex-shrink-0" />
-                  <span className="text-base text-ns-gray font-medium">{item}</span>
+                <div key={i} className="flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-[#6366f1] flex-shrink-0" />
+                  <span className="text-sm text-[#999]">{item}</span>
                 </div>
               ))}
             </div>
-          </div>
-        </FadeIn>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,183 +1,353 @@
 import { useState } from 'react';
 import { Check, Zap, TrendingDown, BarChart3, ArrowRight, FileSearch, ShieldCheck, GitCompare, Upload, CheckCircle, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
-import FadeIn, { StaggerContainer, StaggerItem } from '../components/ui/FadeIn';
-import Button from '../components/ui/Button';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 
 const moduleIcons = { FileSearch, TrendingDown, ShieldCheck, GitCompare };
+const tabs = ['Dashboard', 'Blueprint AI', 'Cost Analysis'];
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  transition: { duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] },
+});
+
+const staggerCard = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      delay: i * 0.1,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  }),
+};
 
 export default function StormedSection() {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState(0);
-  const tabs = ['Dashboard', 'Blueprint AI', 'Cost Analysis'];
+
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: '-80px' });
+
+  const modulesRef = useRef(null);
+  const modulesInView = useInView(modulesRef, { once: true, margin: '-60px' });
+
+  const bottomRef = useRef(null);
+  const bottomInView = useInView(bottomRef, { once: true, margin: '-60px' });
 
   return (
-    <section id="stormed" className="section-pad relative overflow-hidden glow-top">
-      <div className="container-ns">
-        {/* Header */}
-        <FadeIn className="text-center mb-20 sm:mb-28 md:mb-32 lg:mb-40">
-          <div className="mb-10">
-            <span className="badge-ns">
-              <Zap className="w-3.5 h-3.5 text-ns-warm" />
-              <span>Produto NeuralSense</span>
-            </span>
-          </div>
-          <h2
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.25rem] font-bold text-ns-white leading-[1.05] tracking-tight mb-8 sm:mb-10"
-            style={{ fontFamily: "'Outfit', system-ui, sans-serif" }}
-          >
-            STORMED<span className="text-ns-accent">.AI</span>
-          </h2>
-          <p className="text-lg sm:text-xl text-ns-accent font-semibold mb-6">{t.stormed.subtitle}</p>
-          <p className="text-base sm:text-lg md:text-xl text-ns-gray leading-[1.8] max-w-[660px] mx-auto">{t.stormed.text}</p>
-        </FadeIn>
+    <section id="stormed" ref={sectionRef} className="py-24 md:py-32 bg-[#000] relative overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
 
-        {/* Stats */}
-        <FadeIn delay={0.1} className="flex justify-center gap-16 sm:gap-20 md:gap-28 lg:gap-36 mb-20 sm:mb-28 md:mb-32 lg:mb-40">
+        {/* ── Header ── */}
+        <div className="text-center mb-16">
+          <motion.p
+            {...fadeUp(0)}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            className="text-xs tracking-widest text-[#666] uppercase mb-6"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            Produto NeuralSense
+          </motion.p>
+
+          <motion.h2
+            {...fadeUp(0.1)}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.05] tracking-tight mb-5"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            STORMED<span className="text-[#6366f1]">.AI</span>
+          </motion.h2>
+
+          <motion.p
+            {...fadeUp(0.2)}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            className="text-lg text-[#6366f1] font-medium mb-6"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            {t.stormed.subtitle}
+          </motion.p>
+
+          <motion.p
+            {...fadeUp(0.3)}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            className="text-[#999] text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            {t.stormed.text}
+          </motion.p>
+        </div>
+
+        {/* ── Stats Row ── */}
+        <motion.div
+          {...fadeUp(0.4)}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          className="flex justify-center gap-12 md:gap-20 mb-16"
+        >
           {t.stormed.stats.map((stat, i) => (
             <div key={i} className="text-center">
               <p
-                className="text-3xl sm:text-4xl md:text-5xl font-bold text-ns-white tracking-tight"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                className="text-3xl md:text-4xl font-bold text-white tracking-tight"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 {stat.value}
               </p>
-              <p className="text-sm sm:text-base text-ns-muted mt-3">{stat.label}</p>
+              <p
+                className="text-sm text-[#999] mt-2"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                {stat.label}
+              </p>
             </div>
           ))}
-        </FadeIn>
+        </motion.div>
 
-        {/* Modules */}
-        <StaggerContainer stagger={0.1} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-10 mb-20 sm:mb-28 md:mb-32 lg:mb-40">
+        {/* ── Module Cards ── */}
+        <div ref={modulesRef} className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
           {t.stormed.modules.map((mod, i) => {
             const Icon = moduleIcons[mod.icon] || FileSearch;
             return (
-              <StaggerItem key={i}>
-                <div className="p-10 sm:p-12 rounded-3xl border border-ns-border bg-ns-card/40 hover:border-ns-border-hover transition-all duration-500">
-                  <div className="w-14 h-14 rounded-2xl bg-ns-accent-muted flex items-center justify-center mb-8">
-                    <Icon className="w-6 h-6 text-ns-accent" />
-                  </div>
-                  <h4
-                    className="text-lg font-bold text-ns-white mb-4"
-                    style={{ fontFamily: "'Outfit', system-ui, sans-serif" }}
-                  >
-                    {mod.title}
-                  </h4>
-                  <p className="text-sm text-ns-muted leading-[1.85]">{mod.desc}</p>
+              <motion.div
+                key={i}
+                custom={i}
+                initial="hidden"
+                animate={modulesInView ? 'visible' : 'hidden'}
+                variants={staggerCard}
+                className="bg-[#0a0a0a] border border-white/[0.06] rounded-2xl p-7"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#6366f1]/10 flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5 text-[#6366f1]" />
                 </div>
-              </StaggerItem>
+                <h4
+                  className="text-sm font-semibold text-white mb-2"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {mod.title}
+                </h4>
+                <p
+                  className="text-xs text-[#999] leading-relaxed"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {mod.desc}
+                </p>
+              </motion.div>
             );
           })}
-        </StaggerContainer>
+        </div>
 
-        {/* Features + Dashboard — two columns */}
-        <FadeIn className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-start">
-          {/* Features */}
-          <div>
+        {/* ── Two-Column: Features + Dashboard ── */}
+        <div ref={bottomRef} className="grid lg:grid-cols-2 gap-10 items-start">
+
+          {/* Left: Features + CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={bottomInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <h3
-              className="text-2xl sm:text-3xl font-bold text-ns-white mb-12"
-              style={{ fontFamily: "'Outfit', system-ui, sans-serif" }}
+              className="text-xl font-semibold text-white mb-6"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             >
               Funcionalidades
             </h3>
-            <div className="space-y-4 mb-14">
+
+            <div>
               {t.stormed.features.map((feature, i) => (
-                <div key={i} className="flex items-center gap-5 py-4 px-6 rounded-2xl border border-ns-border/40 bg-ns-card/30 hover:border-ns-border-hover transition-colors duration-300">
-                  <Check className="w-5 h-5 text-ns-accent flex-shrink-0" />
-                  <span className="text-base text-ns-gray">{feature}</span>
+                <div key={i} className="flex items-center gap-3 py-2.5">
+                  <Check className="w-4 h-4 text-[#6366f1] flex-shrink-0" />
+                  <span
+                    className="text-sm text-[#999]"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                  >
+                    {feature}
+                  </span>
                 </div>
               ))}
             </div>
-            <Button size="lg" icon={ArrowRight}>{t.stormed.cta}</Button>
-          </div>
 
-          {/* Dashboard mockup */}
-          <div className="rounded-3xl border border-ns-border bg-ns-card/50 overflow-hidden">
-            <div className="flex border-b border-ns-border">
+            <button
+              className="mt-8 inline-flex items-center gap-2 bg-[#6366f1] hover:bg-[#5558e6] text-white rounded-xl px-6 py-3 text-sm font-medium transition-colors duration-200"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              {t.stormed.cta}
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </motion.div>
+
+          {/* Right: Dashboard Mockup */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={bottomInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="bg-[#0a0a0a] border border-white/[0.06] rounded-2xl overflow-hidden"
+          >
+            {/* Tab bar */}
+            <div className="flex border-b border-white/[0.06]">
               {tabs.map((tab, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveTab(i)}
-                  className={`flex-1 px-5 py-5 text-sm font-semibold transition-all duration-300 ${
+                  className={`flex-1 px-4 py-3.5 text-sm font-medium transition-colors duration-200 ${
                     activeTab === i
-                      ? 'text-ns-accent border-b-2 border-ns-accent bg-ns-accent/5'
-                      : 'text-ns-muted hover:text-ns-gray'
+                      ? 'text-[#6366f1] border-b-2 border-[#6366f1]'
+                      : 'text-[#666] hover:text-[#999]'
                   }`}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
                 >
                   {tab}
                 </button>
               ))}
             </div>
 
-            <div className="p-8 sm:p-10 space-y-6">
+            {/* Tab Content */}
+            <div className="p-6">
+
+              {/* ── Tab 0: Dashboard ── */}
               {activeTab === 0 && (
-                <>
-                  <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-4">
+                  {/* KPI Cards */}
+                  <div className="grid grid-cols-3 gap-3">
                     {[
                       { label: 'Custo Reduzido', value: '-23%', icon: TrendingDown, color: 'text-emerald-400' },
-                      { label: 'Alertas Hoje', value: '7', icon: Zap, color: 'text-ns-warm' },
-                      { label: 'ROI Mensal', value: '+R$45k', icon: BarChart3, color: 'text-ns-accent' },
+                      { label: 'Alertas Hoje', value: '7', icon: Zap, color: 'text-amber-400' },
+                      { label: 'ROI Mensal', value: '+R$45k', icon: BarChart3, color: 'text-[#6366f1]' },
                     ].map((kpi, i) => (
-                      <div key={i} className="bg-ns-black/60 rounded-2xl p-5 border border-ns-border/30">
-                        <kpi.icon className={`w-5 h-5 ${kpi.color} mb-3`} />
-                        <p className={`text-xl font-bold ${kpi.color}`} style={{ fontFamily: "'JetBrains Mono', monospace" }}>{kpi.value}</p>
-                        <p className="text-xs text-ns-muted mt-2">{kpi.label}</p>
+                      <div key={i} className="bg-black/40 rounded-xl p-4 border border-white/[0.04]">
+                        <kpi.icon className={`w-4 h-4 ${kpi.color} mb-2`} />
+                        <p
+                          className={`text-lg font-bold ${kpi.color}`}
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          {kpi.value}
+                        </p>
+                        <p
+                          className="text-[11px] text-[#666] mt-1"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          {kpi.label}
+                        </p>
                       </div>
                     ))}
                   </div>
-                  <div className="bg-ns-black/60 rounded-2xl p-7 border border-ns-border/30">
-                    <div className="flex items-center justify-between mb-6">
-                      <span className="text-sm font-semibold text-ns-gray">Custo por Componente</span>
-                      <span className="text-xs text-ns-muted">30 dias</span>
+
+                  {/* Cost Breakdown Chart */}
+                  <div className="bg-black/40 rounded-xl p-4 border border-white/[0.04]">
+                    <div className="flex items-center justify-between mb-4">
+                      <span
+                        className="text-xs font-semibold text-[#999]"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        Custo por Componente
+                      </span>
+                      <span
+                        className="text-[11px] text-[#666]"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        30 dias
+                      </span>
                     </div>
                     {[
-                      { name: 'Aço SAE 1020', pct: 82, saving: '-12%' },
-                      { name: 'Alumínio 6061', pct: 65, saving: '-8%' },
+                      { name: 'Aco SAE 1020', pct: 82, saving: '-12%' },
+                      { name: 'Aluminio 6061', pct: 65, saving: '-8%' },
                       { name: 'Processo CNC', pct: 45, saving: '-18%' },
                     ].map((item, i) => (
-                      <div key={i} className="mb-5 last:mb-0">
-                        <div className="flex justify-between text-sm mb-2">
-                          <span className="text-ns-gray">{item.name}</span>
-                          <span className="text-emerald-400 font-semibold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{item.saving}</span>
+                      <div key={i} className="mb-3 last:mb-0">
+                        <div className="flex justify-between mb-1.5">
+                          <span
+                            className="text-xs text-[#999]"
+                            style={{ fontFamily: "'Inter', sans-serif" }}
+                          >
+                            {item.name}
+                          </span>
+                          <span
+                            className="text-xs text-emerald-400 font-semibold"
+                            style={{ fontFamily: "'Inter', sans-serif" }}
+                          >
+                            {item.saving}
+                          </span>
                         </div>
-                        <div className="h-2 bg-ns-black rounded-full overflow-hidden">
-                          <div className="h-full rounded-full bg-ns-accent/50" style={{ width: `${item.pct}%` }} />
+                        <div className="h-1.5 bg-[#111] rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-[#6366f1]/50"
+                            style={{ width: `${item.pct}%` }}
+                          />
                         </div>
                       </div>
                     ))}
                   </div>
-                </>
+                </div>
               )}
 
+              {/* ── Tab 1: Blueprint AI ── */}
               {activeTab === 1 && (
-                <>
-                  <div className="border-2 border-dashed border-ns-border rounded-2xl p-12 text-center">
-                    <Upload className="w-10 h-10 text-ns-muted mx-auto mb-4" />
-                    <p className="text-sm text-ns-muted font-medium">Upload CAD Blueprint</p>
-                    <p className="text-xs text-ns-subtle mt-2">.PDF, .DWG, .STEP</p>
+                <div className="space-y-4">
+                  {/* Upload Zone */}
+                  <div className="border-2 border-dashed border-white/[0.06] rounded-xl p-8 text-center">
+                    <Upload className="w-8 h-8 text-[#666] mx-auto mb-3" />
+                    <p
+                      className="text-sm text-[#666] font-medium"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      Upload CAD Blueprint
+                    </p>
+                    <p
+                      className="text-[11px] text-[#666] mt-1"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      .PDF, .DWG, .STEP
+                    </p>
                   </div>
-                  <div className="bg-ns-black/60 rounded-2xl p-7 border border-ns-border/30">
-                    <div className="flex items-center gap-3 mb-6">
-                      <FileSearch className="w-5 h-5 text-ns-accent" />
-                      <span className="text-sm font-bold text-ns-white">Análise</span>
-                      <span className="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full ml-auto font-semibold">OK</span>
+
+                  {/* Analysis Card */}
+                  <div className="bg-black/40 rounded-xl p-4 border border-white/[0.04]">
+                    <div className="flex items-center gap-2 mb-4">
+                      <FileSearch className="w-4 h-4 text-[#6366f1]" />
+                      <span
+                        className="text-sm font-semibold text-white"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        Analise
+                      </span>
+                      <span className="text-[11px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full ml-auto font-medium">
+                        OK
+                      </span>
                     </div>
                     {[
-                      { label: 'Componentes', value: '24 peças' },
-                      { label: 'Material', value: 'Aço SAE 4140' },
-                      { label: 'Tolerância', value: '±0.005mm' },
+                      { label: 'Componentes', value: '24 pecas' },
+                      { label: 'Material', value: 'Aco SAE 4140' },
+                      { label: 'Tolerancia', value: '+-0.005mm' },
                       { label: 'BOM', value: 'MBOM + BBOM' },
                     ].map((row, i) => (
-                      <div key={i} className="flex justify-between py-3.5 border-b border-ns-border/20 last:border-0">
-                        <span className="text-sm text-ns-muted">{row.label}</span>
-                        <span className="text-sm text-ns-white font-semibold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{row.value}</span>
+                      <div key={i} className="flex justify-between py-2.5 border-b border-white/[0.04] last:border-0">
+                        <span
+                          className="text-xs text-[#666]"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          {row.label}
+                        </span>
+                        <span
+                          className="text-xs text-white font-semibold"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          {row.value}
+                        </span>
                       </div>
                     ))}
                   </div>
-                  <div className="bg-ns-black/60 rounded-2xl p-7 border border-ns-border/30">
-                    <div className="flex items-center gap-3 mb-5">
-                      <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                      <span className="text-sm font-bold text-ns-white">GD&T — ASME Y14.5</span>
+
+                  {/* GD&T Compliance Card */}
+                  <div className="bg-black/40 rounded-xl p-4 border border-white/[0.04]">
+                    <div className="flex items-center gap-2 mb-3">
+                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                      <span
+                        className="text-sm font-semibold text-white"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        GD&T — ASME Y14.5
+                      </span>
                     </div>
                     {[
                       { check: 'Datum references', ok: true },
@@ -185,59 +355,118 @@ export default function StormedSection() {
                       { check: 'Surface finish', ok: true },
                       { check: 'Thread callouts', ok: false },
                     ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 py-2.5">
-                        {item.ok ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <AlertTriangle className="w-4 h-4 text-ns-warm" />}
-                        <span className="text-sm text-ns-gray flex-1">{item.check}</span>
-                        <span className={`text-xs font-bold ${item.ok ? 'text-emerald-400' : 'text-ns-warm'}`} style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                      <div key={i} className="flex items-center gap-2 py-2">
+                        {item.ok
+                          ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+                          : <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                        }
+                        <span
+                          className="text-xs text-[#999] flex-1"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          {item.check}
+                        </span>
+                        <span
+                          className={`text-[11px] font-bold ${item.ok ? 'text-emerald-400' : 'text-amber-400'}`}
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
                           {item.ok ? 'OK' : 'WARN'}
                         </span>
                       </div>
                     ))}
                   </div>
-                </>
+                </div>
               )}
 
+              {/* ── Tab 2: Cost Analysis ── */}
               {activeTab === 2 && (
-                <>
-                  <div className="bg-ns-black/60 rounded-2xl p-7 border border-ns-border/30">
-                    <span className="text-sm font-bold text-ns-white">Fornecedores</span>
-                    <div className="space-y-4 mt-6">
+                <div className="space-y-4">
+                  {/* Supplier Comparison */}
+                  <div className="bg-black/40 rounded-xl p-4 border border-white/[0.04]">
+                    <span
+                      className="text-xs font-semibold text-white"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      Fornecedores
+                    </span>
+                    <div className="space-y-2.5 mt-4">
                       {[
                         { name: 'Fornecedor A (Atual)', price: 'R$142.50/kg', best: false },
                         { name: 'Fornecedor B', price: 'R$128.30/kg', best: false },
                         { name: 'Fornecedor C (IA)', price: 'R$118.90/kg', best: true },
                       ].map((s, i) => (
-                        <div key={i} className={`p-5 rounded-2xl border ${s.best ? 'border-ns-accent/30 bg-ns-accent/5' : 'border-ns-border/20'}`}>
-                          <div className="flex justify-between">
-                            <span className="text-sm text-ns-gray">{s.name}</span>
-                            <span className={`text-sm font-bold ${s.best ? 'text-ns-accent' : 'text-ns-muted'}`} style={{ fontFamily: "'JetBrains Mono', monospace" }}>{s.price}</span>
+                        <div
+                          key={i}
+                          className={`p-3 rounded-xl border ${
+                            s.best
+                              ? 'border-[#6366f1]/30 bg-[#6366f1]/5'
+                              : 'border-white/[0.04]'
+                          }`}
+                        >
+                          <div className="flex justify-between items-center">
+                            <span
+                              className="text-xs text-[#999]"
+                              style={{ fontFamily: "'Inter', sans-serif" }}
+                            >
+                              {s.name}
+                            </span>
+                            <span
+                              className={`text-xs font-bold ${s.best ? 'text-[#6366f1]' : 'text-[#666]'}`}
+                              style={{ fontFamily: "'Inter', sans-serif" }}
+                            >
+                              {s.price}
+                            </span>
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
-                  <div className="bg-ns-black/60 rounded-2xl p-7 border border-ns-border/30">
-                    <span className="text-sm font-bold text-ns-white">Commodities</span>
-                    <div className="grid grid-cols-2 gap-4 mt-5">
+
+                  {/* Commodity Prices */}
+                  <div className="bg-black/40 rounded-xl p-4 border border-white/[0.04]">
+                    <span
+                      className="text-xs font-semibold text-white"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      Commodities
+                    </span>
+                    <div className="grid grid-cols-2 gap-3 mt-4">
                       {[
-                        { name: 'Aço HRC', price: '$680/ton', change: '-2.3%', down: true },
-                        { name: 'Alumínio', price: '$2,410/ton', change: '+1.1%', down: false },
+                        { name: 'Aco HRC', price: '$680/ton', change: '-2.3%', down: true },
+                        { name: 'Aluminio', price: '$2,410/ton', change: '+1.1%', down: false },
                         { name: 'Cobre', price: '$8,950/ton', change: '-0.8%', down: true },
                         { name: 'Zinco', price: '$2,680/ton', change: '+0.5%', down: false },
                       ].map((c, i) => (
-                        <div key={i} className="p-5 rounded-2xl border border-ns-border/20">
-                          <p className="text-xs text-ns-muted">{c.name}</p>
-                          <p className="text-sm font-bold text-ns-white mt-1" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{c.price}</p>
-                          <p className={`text-xs font-semibold mt-1 ${c.down ? 'text-emerald-400' : 'text-red-400'}`} style={{ fontFamily: "'JetBrains Mono', monospace" }}>{c.change}</p>
+                        <div key={i} className="p-3 rounded-xl border border-white/[0.04]">
+                          <p
+                            className="text-[11px] text-[#666]"
+                            style={{ fontFamily: "'Inter', sans-serif" }}
+                          >
+                            {c.name}
+                          </p>
+                          <p
+                            className="text-xs font-bold text-white mt-1"
+                            style={{ fontFamily: "'Inter', sans-serif" }}
+                          >
+                            {c.price}
+                          </p>
+                          <p
+                            className={`text-[11px] font-semibold mt-1 ${c.down ? 'text-emerald-400' : 'text-amber-400'}`}
+                            style={{ fontFamily: "'Inter', sans-serif" }}
+                          >
+                            {c.change}
+                          </p>
                         </div>
                       ))}
                     </div>
                   </div>
-                </>
+                </div>
               )}
+
             </div>
-          </div>
-        </FadeIn>
+          </motion.div>
+
+        </div>
       </div>
     </section>
   );
