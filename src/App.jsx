@@ -11,6 +11,10 @@ import ConsciousnessSection from './sections/ConsciousnessSection';
 import AboutSection from './sections/AboutSection';
 import ContactSection from './sections/ContactSection';
 
+function Divider() {
+  return <div className="section-divider" />;
+}
+
 export default function App() {
   return (
     <LanguageProvider>
@@ -18,12 +22,19 @@ export default function App() {
       <Header />
       <main>
         <HeroSection />
+        <Divider />
         <ProblemSection />
+        <Divider />
         <SolutionSection />
+        <Divider />
         <ServicesSection />
+        <Divider />
         <StormedSection />
+        <Divider />
         <ConsciousnessSection />
+        <Divider />
         <AboutSection />
+        <Divider />
         <ContactSection />
       </main>
       <Footer />

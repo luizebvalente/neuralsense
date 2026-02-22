@@ -31,14 +31,14 @@ export default function Header() {
   }
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-dark border-b border-ns-border shadow-lg shadow-black/20' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-dark border-b border-ns-border' : 'bg-transparent'}`}>
       <div className="container-wide">
-        <div className="flex items-center justify-between h-20">
-          <button onClick={() => scrollTo('hero')} className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-lg gradient-accent flex items-center justify-center shadow-lg shadow-ns-accent/20 group-hover:shadow-ns-accent/40 transition-shadow">
-              <Brain className="w-5 h-5 text-white" />
+        <div className="flex items-center justify-between h-[72px]">
+          <button onClick={() => scrollTo('hero')} className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg gradient-accent flex items-center justify-center">
+              <Brain className="w-4 h-4 text-white" />
             </div>
-            <span className="text-lg font-extrabold text-ns-white tracking-tight">
+            <span className="text-base font-bold text-ns-white tracking-tight">
               Neural<span className="text-ns-accent">Sense</span><span className="text-ns-muted font-normal">.ai</span>
             </span>
           </button>
@@ -48,7 +48,7 @@ export default function Header() {
               <button
                 key={item.id}
                 onClick={() => handleNav(item.id)}
-                className="text-sm font-medium text-ns-gray hover:text-ns-accent transition-colors duration-200 relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-ns-accent after:transition-all hover:after:w-full"
+                className="text-sm text-ns-muted hover:text-ns-white transition-colors duration-200"
               >
                 {item.label}
               </button>
@@ -56,33 +56,33 @@ export default function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
-            <button onClick={toggleLang} className="flex items-center gap-1.5 text-sm text-ns-gray hover:text-ns-accent transition-colors">
+            <button onClick={toggleLang} className="flex items-center gap-1.5 text-sm text-ns-muted hover:text-ns-white transition-colors">
               <Globe className="w-4 h-4" />
-              <span className="font-medium">{lang.toUpperCase()}</span>
+              <span>{lang.toUpperCase()}</span>
             </button>
             <Button size="sm" icon={ArrowRight} onClick={() => scrollTo('contact')}>
               {t.nav.cta}
             </Button>
           </div>
 
-          <button onClick={() => setOpen(!open)} className="lg:hidden p-2 text-ns-gray hover:text-ns-accent transition-colors">
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          <button onClick={() => setOpen(!open)} className="lg:hidden p-2 text-ns-muted hover:text-ns-white transition-colors">
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
         {open && (
-          <div className="lg:hidden py-6 space-y-1 border-t border-ns-border animate-slide-down">
+          <div className="lg:hidden pb-6 space-y-1 border-t border-ns-border">
             {navItems.map(item => (
               <button
                 key={item.id}
                 onClick={() => handleNav(item.id)}
-                className="block w-full text-left px-4 py-3 text-sm text-ns-gray hover:text-ns-accent hover:bg-ns-accent/5 rounded-lg transition-all"
+                className="block w-full text-left px-4 py-3 text-sm text-ns-muted hover:text-ns-white rounded-lg transition-all"
               >
                 {item.label}
               </button>
             ))}
             <div className="flex items-center gap-3 pt-4 px-4">
-              <button onClick={toggleLang} className="flex items-center gap-1.5 text-sm text-ns-gray hover:text-ns-accent">
+              <button onClick={toggleLang} className="flex items-center gap-1.5 text-sm text-ns-muted hover:text-ns-white">
                 <Globe className="w-4 h-4" /> {lang.toUpperCase()}
               </button>
               <Button size="sm" className="flex-1" icon={ArrowRight} onClick={() => handleNav('contact')}>

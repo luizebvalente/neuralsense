@@ -1,18 +1,18 @@
 import { clsx } from 'clsx';
 
 export default function Button({ children, variant = 'primary', size = 'md', className, icon: Icon, iconPosition = 'right', loading, ...props }) {
-  const base = 'inline-flex items-center justify-center gap-2 font-semibold transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
+  const base = 'inline-flex items-center justify-center gap-2.5 font-medium transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variants = {
-    primary: 'bg-ns-accent text-white hover:bg-ns-accent-light hover:shadow-[0_0_30px_rgba(37,99,235,0.3)] active:scale-[0.98]',
-    secondary: 'bg-transparent border border-ns-accent text-ns-accent hover:bg-ns-accent/10 hover:shadow-[0_0_20px_rgba(37,99,235,0.15)]',
-    ghost: 'bg-transparent text-ns-gray hover:text-ns-white hover:bg-white/5',
+    primary: 'bg-ns-accent text-white hover:bg-ns-accent-dark active:scale-[0.98]',
+    secondary: 'bg-transparent border border-ns-border text-ns-gray hover:text-ns-white hover:border-ns-muted',
+    ghost: 'bg-transparent text-ns-gray hover:text-ns-white',
   };
 
   const sizes = {
     sm: 'px-4 py-2 text-sm rounded-lg',
     md: 'px-6 py-3 text-sm rounded-xl',
-    lg: 'px-8 py-4 text-base rounded-xl',
+    lg: 'px-8 py-3.5 text-[15px] rounded-xl',
   };
 
   return (
