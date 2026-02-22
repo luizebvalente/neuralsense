@@ -3,62 +3,36 @@
 /* ═══════════════════════════════════════════════════════════
    NeuralSense.ai — Cinematic Industrial Design System
    Fonts: Outfit (display) · DM Sans (body) · JetBrains Mono (data)
-   Palette: Deep noir + Indigo accent + Amber highlight
    ═══════════════════════════════════════════════════════════ */
 
 @theme {
-  /* ─── Color System ─── */
-  --color-ns-black:        #06060a;
-  --color-ns-dark:         #0b0b12;
-  --color-ns-surface:      #10101a;
-  --color-ns-card:         #141420;
-  --color-ns-elevated:     #1a1a2a;
-  --color-ns-border:       #1f1f32;
-  --color-ns-border-hover: #2d2d48;
+  --color-ns-black:        #050508;
+  --color-ns-dark:         #0a0a10;
+  --color-ns-surface:      #0e0e18;
+  --color-ns-card:         #121220;
+  --color-ns-elevated:     #1a1a2e;
+  --color-ns-border:       #1c1c30;
+  --color-ns-border-hover: #2e2e50;
   --color-ns-white:        #eeeef2;
   --color-ns-gray:         #9898ab;
   --color-ns-muted:        #5a5a72;
   --color-ns-subtle:       #3a3a50;
 
-  /* Primary — Indigo */
   --color-ns-accent:       #6366f1;
   --color-ns-accent-hover: #818cf8;
   --color-ns-accent-dark:  #4f46e5;
-  --color-ns-accent-muted: rgba(99, 102, 241, 0.12);
-  --color-ns-glow:         rgba(99, 102, 241, 0.10);
-  --color-ns-glow-strong:  rgba(99, 102, 241, 0.25);
+  --color-ns-accent-muted: rgba(99, 102, 241, 0.10);
+  --color-ns-glow:         rgba(99, 102, 241, 0.08);
+  --color-ns-glow-strong:  rgba(99, 102, 241, 0.20);
 
-  /* Secondary — Amber */
   --color-ns-warm:         #f59e0b;
   --color-ns-warm-muted:   rgba(245, 158, 11, 0.12);
 
-  /* ─── Typography ─── */
   --font-family-display: 'Outfit', system-ui, sans-serif;
   --font-family-body:    'DM Sans', system-ui, sans-serif;
   --font-family-mono:    'JetBrains Mono', ui-monospace, monospace;
 
-  /* ─── Animations ─── */
-  --animate-fade-in:    fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-slide-up:   slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-slide-down: slide-down 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-glow-pulse: glow-pulse 4s ease-in-out infinite;
-}
-
-/* ─── Keyframes ─── */
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slide-down {
-  from { opacity: 0; transform: translateY(-20px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes glow-pulse {
@@ -69,13 +43,9 @@
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
   10%      { transform: translate(-5%, -10%); }
-  20%      { transform: translate(-15%, 5%); }
   30%      { transform: translate(7%, -25%); }
-  40%      { transform: translate(-5%, 25%); }
   50%      { transform: translate(-15%, 10%); }
-  60%      { transform: translate(15%, 0%); }
   70%      { transform: translate(0%, 15%); }
-  80%      { transform: translate(3%, 35%); }
   90%      { transform: translate(-10%, 10%); }
 }
 
@@ -83,11 +53,7 @@
    Base
    ═══════════════════════════════════════════════════════════ */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -97,20 +63,20 @@ html {
 
 body {
   font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-  background: var(--color-ns-black);
-  color: var(--color-ns-white);
+  background: #050508;
+  color: #eeeef2;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Outfit', system-ui, sans-serif;
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.035em;
-  color: var(--color-ns-white);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #eeeef2;
 }
 
 ::selection {
@@ -118,80 +84,71 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 
-/* ─── Scrollbar ─── */
-
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--color-ns-black); }
-::-webkit-scrollbar-thumb { background: var(--color-ns-border); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-ns-accent); }
+::-webkit-scrollbar-track { background: #050508; }
+::-webkit-scrollbar-thumb { background: #1c1c30; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #6366f1; }
 
 /* ═══════════════════════════════════════════════════════════
-   Layout
+   Layout — Container
+   Max 1400px with very generous horizontal padding
    ═══════════════════════════════════════════════════════════ */
 
 .container-ns {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 28px;
+  padding-right: 28px;
 }
 
 @media (min-width: 640px) {
-  .container-ns {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
+  .container-ns { padding-left: 48px; padding-right: 48px; }
 }
 
 @media (min-width: 768px) {
-  .container-ns {
-    padding-left: 56px;
-    padding-right: 56px;
-  }
+  .container-ns { padding-left: 64px; padding-right: 64px; }
 }
 
 @media (min-width: 1024px) {
-  .container-ns {
-    padding-left: 80px;
-    padding-right: 80px;
-  }
+  .container-ns { padding-left: 96px; padding-right: 96px; }
 }
 
-/* ─── Section Spacing — AGGRESSIVE ─── */
+@media (min-width: 1440px) {
+  .container-ns { padding-left: 120px; padding-right: 120px; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Section Spacing — VERY AGGRESSIVE
+   Each section should breathe like its own page
+   ═══════════════════════════════════════════════════════════ */
 
 .section-pad {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 120px;
+  padding-bottom: 120px;
 }
 
 @media (min-width: 640px) {
-  .section-pad {
-    padding-top: 140px;
-    padding-bottom: 140px;
-  }
+  .section-pad { padding-top: 160px; padding-bottom: 160px; }
+}
+
+@media (min-width: 768px) {
+  .section-pad { padding-top: 200px; padding-bottom: 200px; }
 }
 
 @media (min-width: 1024px) {
-  .section-pad {
-    padding-top: 180px;
-    padding-bottom: 180px;
-  }
+  .section-pad { padding-top: 240px; padding-bottom: 240px; }
 }
 
-@media (min-width: 1280px) {
-  .section-pad {
-    padding-top: 200px;
-    padding-bottom: 200px;
-  }
+@media (min-width: 1440px) {
+  .section-pad { padding-top: 280px; padding-bottom: 280px; }
 }
 
 /* ═══════════════════════════════════════════════════════════
    Visual Effects
    ═══════════════════════════════════════════════════════════ */
 
-/* Film grain overlay */
 .grain::before {
   content: '';
   position: fixed;
@@ -201,51 +158,25 @@ h1, h2, h3, h4, h5, h6 {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9000;
-  opacity: 0.5;
+  opacity: 0.4;
   animation: grain 8s steps(10) infinite;
 }
 
-/* Gradient text */
 .text-gradient {
-  background: linear-gradient(135deg, #818cf8, #6366f1, #a78bfa);
+  background: linear-gradient(135deg, #818cf8 0%, #6366f1 40%, #a78bfa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.text-gradient-warm {
-  background: linear-gradient(135deg, #f59e0b, #fbbf24);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Accent gradient */
 .gradient-accent {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
 }
 
-/* Glass effect */
 .glass-dark {
-  background: rgba(6, 6, 10, 0.85);
-  backdrop-filter: blur(20px) saturate(1.2);
-  -webkit-backdrop-filter: blur(20px) saturate(1.2);
-}
-
-/* Card hover */
-.card-ns {
-  background: var(--color-ns-card);
-  border: 1px solid var(--color-ns-border);
-  border-radius: 20px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-ns:hover {
-  border-color: var(--color-ns-border-hover);
-  box-shadow:
-    0 0 0 1px rgba(99, 102, 241, 0.06),
-    0 24px 64px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
+  background: rgba(5, 5, 8, 0.88);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
 }
 
 /* Section divider */
@@ -253,52 +184,43 @@ h1, h2, h3, h4, h5, h6 {
   height: 1px;
   background: linear-gradient(
     90deg,
-    transparent,
-    rgba(99, 102, 241, 0.12) 25%,
-    rgba(99, 102, 241, 0.12) 75%,
-    transparent
+    transparent 0%,
+    rgba(99, 102, 241, 0.10) 20%,
+    rgba(99, 102, 241, 0.10) 80%,
+    transparent 100%
   );
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-/* Subtle grid background */
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(99, 102, 241, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.018) 1px, transparent 1px);
-  background-size: 72px 72px;
-}
-
-/* Radial glow for section backgrounds */
+/* Subtle radial glow behind sections */
 .glow-top {
   position: relative;
 }
-
 .glow-top::before {
   content: '';
   position: absolute;
-  top: -200px;
+  top: -300px;
   left: 50%;
   transform: translateX(-50%);
-  width: 800px;
-  height: 600px;
-  background: radial-gradient(ellipse, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
+  width: 1000px;
+  height: 800px;
+  background: radial-gradient(ellipse, rgba(99, 102, 241, 0.04) 0%, transparent 70%);
   pointer-events: none;
 }
 
-/* Badge/pill styling */
+/* Badge */
 .badge-ns {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  gap: 10px;
+  padding: 10px 20px;
   border-radius: 9999px;
-  border: 1px solid var(--color-ns-border);
-  background: rgba(20, 20, 32, 0.6);
+  border: 1px solid #1c1c30;
+  background: rgba(18, 18, 32, 0.6);
   font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-ns-gray);
+  color: #9898ab;
 }

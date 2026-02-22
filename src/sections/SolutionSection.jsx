@@ -24,21 +24,18 @@ export default function SolutionSection() {
   return (
     <section id="solution" className="section-pad relative overflow-hidden">
       <div className="container-ns">
-        <SectionTitle
-          title={t.solution.title}
-          subtitle={t.solution.subtitle}
-        />
+        <SectionTitle title={t.solution.title} subtitle={t.solution.subtitle} />
 
-        <FadeIn className="max-w-[800px] mx-auto">
+        <FadeIn className="max-w-[860px] mx-auto">
           {/* Tabs */}
-          <div className="flex flex-wrap justify-center gap-3 mb-14">
+          <div className="flex flex-wrap justify-center gap-4 mb-16 md:mb-20">
             {layers.map((layer, i) => (
               <button
                 key={i}
                 onClick={() => setActive(i)}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-400 ${
+                className={`px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-400 ${
                   active === i
-                    ? 'bg-ns-accent text-white shadow-[0_0_20px_rgba(99,102,241,0.25)]'
+                    ? 'bg-ns-accent text-white shadow-[0_0_24px_rgba(99,102,241,0.3)]'
                     : 'text-ns-muted border border-ns-border hover:text-ns-white hover:border-ns-border-hover'
                 }`}
               >
@@ -48,16 +45,21 @@ export default function SolutionSection() {
           </div>
 
           {/* Detail card */}
-          <div className="rounded-2xl border border-ns-border bg-ns-card/60 p-10 sm:p-12">
-            <h3 className="text-xl sm:text-2xl font-bold text-ns-white mb-8 font-[Outfit]">{layers[active].label}</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="rounded-3xl border border-ns-border bg-ns-card/50 p-10 sm:p-14 md:p-16">
+            <h3
+              className="text-2xl sm:text-3xl font-bold text-ns-white mb-10 md:mb-12"
+              style={{ fontFamily: "'Outfit', system-ui, sans-serif" }}
+            >
+              {layers[active].label}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {layerDetails[active].map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-4 py-4 px-6 rounded-xl bg-ns-black/50 border border-ns-border/40 hover:border-ns-border-hover transition-colors duration-300"
+                  className="flex items-center gap-5 py-5 px-7 rounded-2xl bg-ns-black/60 border border-ns-border/40 hover:border-ns-border-hover transition-all duration-300"
                 >
-                  <div className="w-2 h-2 rounded-full bg-ns-accent flex-shrink-0" />
-                  <span className="text-sm text-ns-gray font-medium">{item}</span>
+                  <div className="w-2.5 h-2.5 rounded-full bg-ns-accent flex-shrink-0" />
+                  <span className="text-base text-ns-gray font-medium">{item}</span>
                 </div>
               ))}
             </div>
