@@ -4,8 +4,8 @@ export default function Button({ children, variant = 'primary', size = 'md', cla
   const base = 'inline-flex items-center justify-center gap-2 font-semibold transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variants = {
-    primary: 'bg-ns-accent text-white hover:bg-ns-accent-light hover:shadow-[0_0_30px_rgba(0,191,255,0.3)] active:scale-[0.98]',
-    secondary: 'bg-transparent border border-ns-accent text-ns-accent hover:bg-ns-accent/10 hover:shadow-[0_0_20px_rgba(0,191,255,0.15)]',
+    primary: 'bg-ns-accent text-white hover:bg-ns-accent-light hover:shadow-[0_0_30px_rgba(37,99,235,0.3)] active:scale-[0.98]',
+    secondary: 'bg-transparent border border-ns-accent text-ns-accent hover:bg-ns-accent/10 hover:shadow-[0_0_20px_rgba(37,99,235,0.15)]',
     ghost: 'bg-transparent text-ns-gray hover:text-ns-white hover:bg-white/5',
   };
 

@@ -7,7 +7,7 @@ export function fireConfetti() {
     gravity: 0.8,
     decay: 0.94,
     startVelocity: 30,
-    colors: ['#00bfff', '#4dd4ff', '#c0c0c0', '#a0a0a0', '#4d94ff'],
+    colors: ['#2563eb', '#3b82f6', '#7c3aed', '#a78bfa', '#60a5fa'],
     shapes: ['square'],
     scalar: 0.8,
   };

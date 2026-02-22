@@ -24,8 +24,8 @@ export default function Footer() {
               <div className="w-9 h-9 rounded-lg gradient-accent flex items-center justify-center">
                 <Brain className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold font-heading text-ns-white tracking-wider">
-                Neural<span className="text-ns-accent">Sense</span><span className="text-ns-muted">.ai</span>
+              <span className="text-lg font-extrabold text-ns-white tracking-tight">
+                Neural<span className="text-ns-accent">Sense</span><span className="text-ns-muted font-normal">.ai</span>
               </span>
             </div>
             <p className="text-sm text-ns-muted leading-relaxed">{t.footer.tagline}</p>
@@ -40,7 +40,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-bold font-heading text-ns-white mb-4 tracking-wider uppercase">{t.nav.solucoes}</h4>
+            <h4 className="text-xs font-semibold text-ns-white mb-4 tracking-widest uppercase">{t.nav.solucoes}</h4>
             <ul className="space-y-2.5">
               {navItems.map(item => (
                 <li key={item.id}>
@@ -53,7 +53,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-bold font-heading text-ns-white mb-4 tracking-wider uppercase">STORMED.AI</h4>
+            <h4 className="text-xs font-semibold text-ns-white mb-4 tracking-widest uppercase">STORMED.AI</h4>
             <ul className="space-y-2.5 text-sm text-ns-muted">
               <li>Cost Analysis</li>
               <li>Component Breakdown</li>
@@ -63,7 +63,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-bold font-heading text-ns-white mb-4 tracking-wider uppercase">{t.nav.contato}</h4>
+            <h4 className="text-xs font-semibold text-ns-white mb-4 tracking-widest uppercase">{t.nav.contato}</h4>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-ns-muted">
                 <Mail className="w-4 h-4 text-ns-accent" />

@@ -38,8 +38,8 @@ export default function Header() {
             <div className="w-9 h-9 rounded-lg gradient-accent flex items-center justify-center shadow-lg shadow-ns-accent/20 group-hover:shadow-ns-accent/40 transition-shadow">
               <Brain className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold font-heading text-ns-white tracking-wider">
-              Neural<span className="text-ns-accent">Sense</span><span className="text-ns-muted">.ai</span>
+            <span className="text-lg font-extrabold text-ns-white tracking-tight">
+              Neural<span className="text-ns-accent">Sense</span><span className="text-ns-muted font-normal">.ai</span>
             </span>
           </button>
 

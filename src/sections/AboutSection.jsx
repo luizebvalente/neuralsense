@@ -8,7 +8,7 @@ export default function AboutSection() {
   const icons = [Shield, Cpu, Target];
 
   return (
-    <section id="about" className="py-24 bg-ns-black relative overflow-hidden">
+    <section id="about" className="py-20 sm:py-28 lg:py-32 bg-ns-black relative overflow-hidden">
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-ns-accent/3 rounded-full blur-[200px]" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,7 +19,7 @@ export default function AboutSection() {
             </h2>
             <p className="text-lg text-ns-gray leading-relaxed mb-8">{t.about.text}</p>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4">
               {[
                 { value: '15+', label: 'Anos de Experiência' },
                 { value: '200+', label: 'Profissionais Treinados' },

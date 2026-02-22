@@ -11,7 +11,7 @@ export default function ConsciousnessSection() {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="consciousness" className="py-24 bg-ns-dark relative overflow-hidden">
+    <section id="consciousness" className="py-20 sm:py-28 lg:py-32 bg-ns-dark relative overflow-hidden">
       <div className="absolute inset-0 grid-bg" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle title={t.consciousness.title} subtitle={t.consciousness.text} />

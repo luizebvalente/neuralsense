@@ -15,7 +15,7 @@ export default function StormedSection() {
   const tabs = ['Dashboard', 'Blueprint AI', 'Cost Analysis'];
 
   return (
-    <section id="stormed" className="py-24 bg-ns-black relative overflow-hidden">
+    <section id="stormed" className="py-20 sm:py-28 lg:py-32 bg-ns-black relative overflow-hidden">
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-ns-accent/3 rounded-full blur-[200px] -translate-y-1/2" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-red-500/3 rounded-full blur-[200px]" />
 
@@ -34,7 +34,7 @@ export default function StormedSection() {
         </div>
 
         {/* Stats bar */}
-        <div className="grid grid-cols-3 gap-4 mb-16 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16 max-w-2xl mx-auto">
           {t.stormed.stats.map((stat, i) => (
             <div key={i} className="text-center p-4 bg-ns-card border border-ns-border rounded-xl">
               <p className="text-2xl sm:text-3xl font-bold font-heading text-ns-accent">{stat.value}</p>

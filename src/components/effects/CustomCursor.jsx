@@ -59,8 +59,8 @@ export default function CustomCursor() {
           width: clicking ? 6 : 8,
           height: clicking ? 6 : 8,
           borderRadius: '50%',
-          background: '#00bfff',
-          boxShadow: '0 0 10px rgba(0,191,255,0.8), 0 0 20px rgba(0,191,255,0.4)',
+          background: '#3b82f6',
+          boxShadow: '0 0 10px rgba(37,99,235,0.8), 0 0 20px rgba(37,99,235,0.4)',
           opacity: visible ? 1 : 0,
           transform: clicking ? 'scale(0.8)' : 'scale(1)',
         }}
@@ -73,7 +73,7 @@ export default function CustomCursor() {
           width: 32,
           height: 32,
           borderRadius: '50%',
-          border: '1px solid rgba(0,191,255,0.3)',
+          border: '1px solid rgba(37,99,235,0.3)',
           opacity: visible ? 0.6 : 0,
           transition: 'opacity 0.3s ease',
         }}

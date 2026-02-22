@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 export default function Input({ label, error, className, textarea, ...props }) {
   const inputClasses = clsx(
     'w-full bg-ns-dark border border-ns-border rounded-xl px-4 py-3 text-ns-white placeholder-ns-muted',
-    'focus:outline-none focus:border-ns-accent focus:shadow-[0_0_15px_rgba(0,191,255,0.1)]',
+    'focus:outline-none focus:border-ns-accent focus:shadow-[0_0_15px_rgba(37,99,235,0.1)]',
     'transition-all duration-300',
     error && 'border-red-500',
     className

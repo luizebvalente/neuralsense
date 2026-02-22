@@ -23,7 +23,7 @@ export default function GlowCard({ children, className, hover = true }) {
         <div
           className="absolute pointer-events-none w-64 h-64 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{
-            background: 'radial-gradient(circle, rgba(0,191,255,0.08) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 70%)',
             left: mousePos.x - 128,
             top: mousePos.y - 128,
           }}
